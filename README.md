@@ -255,3 +255,9 @@ clustering.
 Demo content is illustrative — replace it before drawing conclusions. The reveal
 engine is an independent SVG implementation inspired by the ideas in
 `whiteboard-animator` (MIT); no code was copied from it.
+
+## Screenshots
+
+- `docs/screenshots/01-dashboard.jpg` — the full workspace
+- `docs/screenshots/02-capture-validation.jpg` — the capture form rejecting bad input
+- `docs/screenshots/03-records.png.jpg` — the Records inspector
