@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" width="1600" height="980" role="img" aria-labelledby="t d">
+  <title id="t">CONVERGE2 Signal Canvas — how it works</title>
+  <desc id="d">Five-stage intelligence pipeline from signals to action, with a whiteboard reveal engine and a confidence layer, and a monitoring feedback loop.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1020"/><stop offset="1" stop-color="#070b16"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#35d0d6"/><stop offset="1" stop-color="#4f8cff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#4f8cff"/>
+    </marker>
+    <marker id="arrowc" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#35d0d6"/>
+    </marker>
+    <style>
+      .ttl{fill:#e9edf7;font:700 30px "Segoe UI",Arial,sans-serif;letter-spacing:1px}
+      .sub{fill:#97a2c2;font:400 15px "Segoe UI",Arial,sans-serif}
+      .band{fill:#6d7896;font:700 12px "Segoe UI",Arial,sans-serif;letter-spacing:2px}
+      .card{fill:#101728;stroke:rgba(255,255,255,.12);rx:14}
+      .stage{fill:#e9edf7;font:700 19px "Segoe UI",Arial,sans-serif}
+      .engine{fill:#35d0d6;font:600 11px "Segoe UI",Arial,sans-serif;letter-spacing:1px}
+      .out{fill:#97a2c2;font:400 11.5px "Segoe UI",Arial,sans-serif}
+      .chip{fill:#141c31;stroke:rgba(255,255,255,.12);rx:999}
+      .chipt{fill:#c7cee2;font:400 12px "Segoe UI",Arial,sans-serif}
+      .flow{stroke:#4f8cff;stroke-width:2.4;fill:none;marker-end:url(#arrow)}
+      .loop{stroke:#35d0d6;stroke-width:2;fill:none;marker-end:url(#arrowc);stroke-dasharray:7 6}
+      .loopt{fill:#35d0d6;font:600 12.5px "Segoe UI",Arial,sans-serif}
+      .panelt{fill:#e9edf7;font:700 15px "Segoe UI",Arial,sans-serif}
+      .panelsub{fill:#97a2c2;font:400 12px "Segoe UI",Arial,sans-serif}
+      .leg{fill:#97a2c2;font:400 11.5px "Segoe UI",Arial,sans-serif}
+    </style>
+  </defs>
+
+  <rect width="1600" height="980" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1600" height="6" fill="url(#accent)"/>
+
+  <text class="ttl" x="60" y="70">CONVERGE2 · Signal Canvas — how it works</text>
+  <text class="sub" x="60" y="98">From raw signals to an executed plan. Every insight is drawn onto the canvas by the Whiteboard Reveal engine.</text>
+
+  <!-- INPUTS -->
+  <text class="band" x="60" y="152">INPUTS · SEE</text>
+  <g>
+    <rect class="chip" x="60"  y="166" width="200" height="34"/><text class="chipt" x="78"  y="188">News &amp; filings</text>
+    <rect class="chip" x="270" y="166" width="200" height="34"/><text class="chipt" x="288" y="188">Government &amp; regulator</text>
+    <rect class="chip" x="480" y="166" width="200" height="34"/><text class="chipt" x="498" y="188">Vendor release notes</text>
+    <rect class="chip" x="690" y="166" width="210" height="34"/><text class="chipt" x="708" y="188">Security research</text>
+    <rect class="chip" x="910" y="166" width="200" height="34"/><text class="chipt" x="928" y="188">Market &amp; capital data</text>
+    <rect class="chip" x="1120" y="166" width="200" height="34"/><text class="chipt" x="1138" y="188">Job &amp; talent market</text>
+    <rect class="chip" x="1330" y="166" width="210" height="34"/><text class="chipt" x="1348" y="188">Existing knowledge base</text>
+  </g>
+
+  <!-- PIPELINE CARDS -->
+  <!-- stage 1 -->
+  <g>
+    <rect class="card" x="60" y="250" width="272" height="188" rx="14"/>
+    <text class="stage" x="84" y="288">SEE</text>
+    <text class="engine" x="84" y="310">SIGNAL ENGINE</text>
+    <text class="out" x="84" y="342">Collect signals from</text>
+    <text class="out" x="84" y="360">primary sources first.</text>
+    <text class="out" x="84" y="384">Grade each: FACT ·</text>
+    <text class="out" x="84" y="402">INFERENCE · HYPOTHESIS</text>
+    <text class="out" x="84" y="420">· SPECULATION.</text>
+  </g>
+  <!-- stage 2 -->
+  <g>
+    <rect class="card" x="372" y="250" width="272" height="188" rx="14"/>
+    <text class="stage" x="396" y="288">UNDERSTAND</text>
+    <text class="engine" x="396" y="310">INTELLIGENCE + ARCC</text>
+    <text class="out" x="396" y="342">Build the entity graph:</text>
+    <text class="out" x="396" y="360">companies, tech, markets,</text>
+    <text class="out" x="396" y="378">capital, risk, opportunity.</text>
+    <text class="out" x="396" y="402">Connect, don't summarise.</text>
+  </g>
+  <!-- stage 3 -->
+  <g>
+    <rect class="card" x="684" y="250" width="272" height="188" rx="14"/>
+    <text class="stage" x="708" y="288">FORESEE</text>
+    <text class="engine" x="708" y="310">FORESIGHT ENGINE</text>
+    <text class="out" x="708" y="342">Three futures, never one:</text>
+    <text class="out" x="708" y="360">A most-likely · B high-</text>
+    <text class="out" x="708" y="378">impact · C disruptive.</text>
+    <text class="out" x="708" y="402">Drivers, uncertainties,</text>
+    <text class="out" x="708" y="420">early indicators each.</text>
+  </g>
+  <!-- stage 4 -->
+  <g>
+    <rect class="card" x="996" y="250" width="272" height="188" rx="14"/>
+    <text class="stage" x="1020" y="288">DECIDE</text>
+    <text class="engine" x="1020" y="310">DECISION ENGINE</text>
+    <text class="out" x="1020" y="342">Objective, evidence,</text>
+    <text class="out" x="1020" y="360">options with advantages</text>
+    <text class="out" x="1020" y="378">and risks, recommendation,</text>
+    <text class="out" x="1020" y="396">assumptions, confidence.</text>
+    <text class="out" x="1020" y="420">Evidence before opinion.</text>
+  </g>
+  <!-- stage 5 -->
+  <g>
+    <rect class="card" x="1308" y="250" width="232" height="188" rx="14"/>
+    <text class="stage" x="1332" y="288">ACT</text>
+    <text class="engine" x="1332" y="310">ACTION ENGINE</text>
+    <text class="out" x="1332" y="342">Turn the decision into</text>
+    <text class="out" x="1332" y="360">tasks with owner, inputs,</text>
+    <text class="out" x="1332" y="378">output and deadline.</text>
+    <text class="out" x="1332" y="402">Low-risk tasks run</text>
+    <text class="out" x="1332" y="420">autonomously.</text>
+  </g>
+
+  <!-- flow arrows -->
+  <path class="flow" d="M332,344 L368,344"/>
+  <path class="flow" d="M644,344 L680,344"/>
+  <path class="flow" d="M956,344 L992,344"/>
+  <path class="flow" d="M1268,344 L1304,344"/>
+
+  <!-- OUTPUTS -->
+  <text class="band" x="60" y="492">OUTPUTS · EVIDENCE ARTIFACTS</text>
+  <g>
+    <rect class="chip" x="60"  y="506" width="200" height="34"/><text class="chipt" x="78"  y="528">Signal inbox</text>
+    <rect class="chip" x="270" y="506" width="200" height="34"/><text class="chipt" x="288" y="528">Entity graph</text>
+    <rect class="chip" x="480" y="506" width="200" height="34"/><text class="chipt" x="498" y="528">Scenarios A / B / C</text>
+    <rect class="chip" x="690" y="506" width="200" height="34"/><text class="chipt" x="708" y="528">Decision brief</text>
+    <rect class="chip" x="900" y="506" width="200" height="34"/><text class="chipt" x="918" y="528">Action task graph</text>
+    <rect class="chip" x="1110" y="506" width="200" height="34"/><text class="chipt" x="1128" y="528">Intelligence cards</text>
+    <rect class="chip" x="1320" y="506" width="220" height="34"/><text class="chipt" x="1338" y="528">Monitoring job + alerts</text>
+  </g>
+
+  <!-- TWO ENGINES PANEL -->
+  <g>
+    <rect class="card" x="60" y="586" width="700" height="250" rx="14"/>
+    <text class="panelt" x="86" y="626">Whiteboard Reveal Engine</text>
+    <text class="panelsub" x="86" y="652">Browser-native reinterpretation of the whiteboard-animator idea, rebuilt for SVG.</text>
+    <text class="out" x="86" y="686">• Hubs drawn first, then relations, then labels — component-ordering, not timing.</text>
+    <text class="out" x="86" y="710">• Every edge is drawn source → target from an endpoint, never from the middle.</text>
+    <text class="out" x="86" y="734">• Labels are written character by character, word by word.</text>
+    <text class="out" x="86" y="758">• A pen dot travels the edge currently being drawn (marker-sprite idea).</text>
+    <text class="out" x="86" y="782">• Committed strokes settle; only the live stroke animates — the repo's blend model.</text>
+    <text class="out" x="86" y="806">Result: the intelligence graph sketches itself the way an analyst would on a board.</text>
+  </g>
+
+  <g>
+    <rect class="card" x="840" y="586" width="700" height="250" rx="14"/>
+    <text class="panelt" x="866" y="626">Confidence &amp; Evidence Layer</text>
+    <text class="panelsub" x="866" y="652">No black box. Every recommendation exposes how sure it is, and why.</text>
+    <text class="out" x="866" y="686">• Transparency scores: data completeness, market stability, historical accuracy.</text>
+    <text class="out" x="866" y="710">• Aggregate confidence reacts to the assumption sliders in real time.</text>
+    <text class="out" x="866" y="734">• Risk &amp; Opportunity radar overlays both exposure and upside.</text>
+    <text class="out" x="866" y="758">• Each relationship carries strength, confidence, signal count and evidence.</text>
+    <text class="out" x="866" y="782">• Source quality grading keeps facts, inference and speculation separate.</text>
+    <text class="out" x="866" y="806">Result: you can see the reasoning and decide how much to trust it.</text>
+  </g>
+
+  <!-- FEEDBACK LOOP -->
+  <path class="loop" d="M1424,452 C1424,905 300,942 180,452"/>
+  <text class="loopt" x="560" y="944">Monitoring loop — outcomes become new signals (OBSERVE → RESEARCH → RECOMMEND → EXECUTE → MEASURE → LEARN)</text>
+</svg>

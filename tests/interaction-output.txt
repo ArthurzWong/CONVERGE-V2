@@ -1,0 +1,41 @@
+STEP 1 · interaction (before reload)
+{
+  "storageKind": "localStorage",
+  "before": 0,
+  "modalOpened": true,
+  "afterInvalid": 0,
+  "errorText": "Not saved. Fix the following and try again:Title — Title must be at least 3 characters.Source — A source is required.Why it matters — “Why it matters” must be a",
+  "modalStayedOpen": true,
+  "invalidFieldFlagged": true,
+  "afterValid": 1,
+  "modalClosed": true,
+  "inboxCards": 9,
+  "localBadges": 1,
+  "recordsRows": 1,
+  "afterRun": 2
+}
+
+STEP 2 · after reload (persistence)
+{
+  "afterReload": 2,
+  "storageKind": "localStorage",
+  "signalStillThere": true,
+  "signalTitle": "Browser test: bank opens agent payments to SMEs",
+  "recordsRendered": 2,
+  "inboxCards": 9
+}
+
+  ✓ capture modal opens
+  ✓ invalid submit writes no record
+  ✓ invalid submit shows a readable error
+  ✓ invalid submit keeps the modal open
+  ✓ invalid field is flagged aria-invalid
+  ✓ valid submit writes one record
+  ✓ valid submit closes the modal
+  ✓ inbox shows the filed signal
+  ✓ records panel lists the record
+  ✓ pipeline run is logged
+  ✓ records survive a reload
+  ✓ filed signal re-renders after reload
+
+INTERACTION RESULT: 12/12 passed

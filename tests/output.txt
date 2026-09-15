@@ -1,0 +1,57 @@
+CONVERGE2 Signal Canvas — check suite
+root: /Users/arthurwong/.openclaw-autoclaw/workspace/converge2-signal-canvas
+
+1 · Dataset integrity
+  ✓ meta declares a 5-stage pipeline
+  ✓ graph has at least 10 nodes
+  ✓ graph has at least 15 edges
+  ✓ node ids are unique
+  ✓ every node type is a known type
+  ✓ exactly one core node
+  ✓ every edge references existing nodes
+  ✓ edge ids are unique (source->target)
+  ✓ every edge strength is 0-100
+  ✓ every edge carries an evidence summary
+  ✓ signals use valid priority and quality enums
+  ✓ every signal entity exists on the graph
+  ✓ radar axes align with both series
+  ✓ foresight offers three scenarios A/B/C
+  ✓ decision brief has three options and a recommendation
+  ✓ every action task has the full schema
+
+2 · Signal capture — validation rules
+  ✓ a complete signal is accepted
+  ✓ title is required
+  ✓ title below minimum length is rejected
+  ✓ title above maximum length is rejected
+  ✓ source is required
+  ✓ “why it matters” is required
+  ✓ oversized “why it matters” is rejected
+  ✓ malformed priority is rejected
+  ✓ malformed source quality is rejected
+  ✓ at least one entity is required
+  ✓ unknown entity ids are rejected
+  ✓ errors are user-readable strings
+
+3 · Persistence and traceability
+  ✓ store starts empty
+  ✓ invalid capture returns ok:false
+  ✓ invalid capture writes nothing
+  ✓ valid capture returns a record
+  ✓ record carries id / action / createdAt / status
+  ✓ store now holds exactly one record
+  ✓ pipeline runs are logged as records
+  ✓ records survive a restart
+  ✓ the captured signal is still readable after restart
+  ✓ a single record can be opened by id
+  ✓ exported JSON parses and lists every record
+  ✓ clearing the store empties it
+
+4 · Shipped file set
+  ✓ every required file exists
+  ✓ index.html loads only same-origin scripts
+  ✓ index.html wires the store and capture layers
+
+--------------------------------------------------------
+RESULT: 43 passed, 0 failed, 43 total
+All checks passed.

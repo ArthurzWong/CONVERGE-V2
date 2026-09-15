@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CONVERGE2 · Signal Canvas</title>
+<meta name="description" content="CONVERGE2 Signal Canvas — a strategic intelligence workspace where every insight draws itself." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%234f8cff' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2335d0d6'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- ================= TOP BAR ================= -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="16" cy="16" r="3.4" fill="currentColor"/><circle cx="27" cy="16" r="2.4" fill="currentColor"/></svg>
+        </span>
+        <div class="brand-text">
+          <b>CONVERGE2</b>
+          <small id="meta-horizon">2026 → 2029</small>
+        </div>
+      </div>
+
+      <nav class="pipeline" aria-label="Intelligence pipeline">
+        <span class="pipe-step" data-step="SEE"></span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="UNDERSTAND"></span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="FORESEE"></span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="DECIDE"></span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="ACT"></span>
+      </nav>
+
+      <div class="topbar-actions">
+        <div class="seg" role="tablist" aria-label="Scenario">
+          <button class="seg-btn is-active" data-scen="base" type="button">Base</button>
+          <button class="seg-btn" data-scen="optimistic" type="button">Optimistic</button>
+          <button class="seg-btn" data-scen="conservative" type="button">Conservative</button>
+        </div>
+        <button class="btn btn-ghost" id="export" type="button">Export</button>
+        <button class="btn btn-primary" id="run-top" type="button">Run Pipeline</button>
+      </div>
+    </header>
+
+    <!-- ================= SUBHEAD ================= -->
+    <div class="subhead">
+      <span class="subhead-label">Focus</span>
+      <p id="meta-idea">—</p>
+    </div>
+
+    <!-- ================= MAIN ================= -->
+    <main class="layout">
+      <!-- ---------- LEFT RAIL ---------- -->
+      <aside class="rail rail-left">
+        <section class="panel panel-inbox">
+          <div class="panel-head"><h3>Signal Inbox</h3><span class="tag">Engine 1</span></div>
+          <p class="panel-sub">Raw signals, prioritised and graded by source quality. Select one to isolate its entities on the canvas.</p>
+          <div id="signal-list" class="signal-list"></div>
+        </section>
+        <section class="panel" id="watchlist"></section>
+        <section class="panel" id="records"></section>
+      </aside>
+
+      <!-- ---------- CENTRE ---------- -->
+      <section class="centre">
+        <section class="panel graph-panel">
+          <div class="panel-head">
+            <h3>Intelligence Canvas</h3>
+            <div class="graph-tools">
+              <button class="tool" id="replay" type="button" title="Replay whiteboard reveal">↺ Reveal</button>
+              <button class="tool" id="zoom-in" type="button" title="Zoom in">＋</button>
+              <button class="tool" id="zoom-out" type="button" title="Zoom out">－</button>
+              <button class="tool" id="fit" type="button" title="Reset view">Fit</button>
+            </div>
+          </div>
+          <p class="panel-sub">Entity / relationship graph. The <b>Whiteboard Reveal</b> engine draws it stroke by stroke — hubs first, then relations, then labels, with a pen dot tracking each edge as it is drawn.</p>
+          <div class="graph-stage">
+            <svg id="graph" viewBox="0 0 1000 644" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Intelligence graph"></svg>
+            <div class="reveal-track"><i id="reveal-bar"></i></div>
+            <div id="inspector" class="inspector hidden"></div>
+          </div>
+          <div class="graph-legend" id="graph-legend"></div>
+        </section>
+
+        <section class="metrics" id="metrics"></section>
+
+        <section class="panel" id="impact"></section>
+
+        <section class="panel" id="decision"></section>
+
+        <section class="panel" id="actions"></section>
+      </section>
+
+      <!-- ---------- RIGHT RAIL ---------- -->
+      <aside class="rail rail-right">
+        <section class="panel" id="sim"></section>
+        <section class="panel" id="confidence"></section>
+        <section class="panel" id="radar"></section>
+        <section class="panel" id="foresight"></section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>CONVERGE2 · Signal Canvas — a demo shell over the pipeline in <code>data/intelligence.js</code>.</span>
+      <span>See <code>README.md</code> for how to swap in a live feed.</span>
+    </footer>
+  </div>
+
+  <!-- ================= MODAL ================= -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Intelligence card">
+    <div class="modal-card">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ================= CAPTURE MODAL ================= -->
+  <div id="capture-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="capture-title">
+    <div class="modal-card">
+      <button class="modal-close" id="capture-cancel" type="button" aria-label="Close">×</button>
+      <h2 id="capture-title" class="cap-title">Capture a signal</h2>
+      <p class="panel-sub">File a new signal into the workspace. It is validated, stored, and added to the Signal Inbox.</p>
+      <div id="capture-errors" class="err-box hidden" role="alert" aria-live="assertive"></div>
+      <form id="capture-form" novalidate>
+        <div class="field">
+          <label for="f-title">Title <span class="req">required</span></label>
+          <input id="f-title" name="title" type="text" maxlength="140" placeholder="e.g. A bank opens agent-initiated payments to SMEs" />
+        </div>
+        <div class="field">
+          <label for="f-source">Source <span class="req">required</span></label>
+          <input id="f-source" name="source" type="text" maxlength="140" placeholder="e.g. Regulator briefing, 2026-09-12" />
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-priority">Priority</label><select id="f-priority" name="priority"></select></div>
+          <div class="field"><label for="f-quality">Source quality</label><select id="f-quality" name="quality"></select></div>
+          <div class="field"><label for="f-confidence">Confidence</label><select id="f-confidence" name="confidence"></select></div>
+        </div>
+        <div class="field">
+          <label for="f-why">Why it matters <span class="req">required</span></label>
+          <textarea id="f-why" name="why" rows="3" maxlength="400" placeholder="The strategic meaning — not what happened, but why it matters."></textarea>
+        </div>
+        <div class="field">
+          <label>Connected entities <span class="req">pick at least one</span></label>
+          <div id="f-entities" class="picker"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="capture-reset" type="reset">Reset</button>
+          <button class="btn btn-primary" type="submit">Save signal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="data/intelligence.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/whiteboard-reveal.js"></script>
+  <script src="js/capture.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
