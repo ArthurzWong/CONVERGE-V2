@@ -711,12 +711,109 @@
   }
 
   /* =====================================================================
+   * Canvas view — wheel zoom, drag pan, two-finger pinch
+   * Closes the gap listed in VERIFICATION.md: touch/pointer navigation.
+   * =================================================================== */
+  const BASE_VIEW = { x: 0, y: 0, w: 1000, h: 644 };
+  const view = { ...BASE_VIEW };
+  const MIN_W = 240, MAX_W = 2400;
+  const pointers = new Map();
+
+  function applyView() {
+    if (!svgEl) return;
+    svgEl.setAttribute("viewBox", `${view.x.toFixed(2)} ${view.y.toFixed(2)} ${view.w.toFixed(2)} ${view.h.toFixed(2)}`);
+  }
+  function svgCentre() {
+    const r = svgEl.getBoundingClientRect();
+    return [r.left + r.width / 2, r.top + r.height / 2];
+  }
+  function zoomAt(factor, cx, cy) {
+    const r = svgEl.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    const fx = (cx - r.left) / r.width;
+    const fy = (cy - r.top) / r.height;
+    const ax = view.x + view.w * fx;
+    const ay = view.y + view.h * fy;
+    const nw = clamp(view.w * factor, MIN_W, MAX_W);
+    view.w = nw;
+    view.h = nw * (BASE_VIEW.h / BASE_VIEW.w);
+    view.x = ax - view.w * fx;
+    view.y = ay - view.h * fy;
+    applyView();
+  }
+  function panBy(dxPx, dyPx) {
+    const r = svgEl.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    view.x -= (dxPx / r.width) * view.w;
+    view.y -= (dyPx / r.height) * view.h;
+    applyView();
+  }
+  function resetView() { Object.assign(view, BASE_VIEW); applyView(); }
+  function pinchSpan() {
+    const p = [...pointers.values()];
+    if (p.length < 2) return 0;
+    return Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+  }
+
+  function wireCanvasView() {
+    const zin = $("#zoom-in"), zout = $("#zoom-out"), fit = $("#fit");
+    if (zin) zin.addEventListener("click", () => zoomAt(0.8, svgCentre()[0], svgCentre()[1]));
+    if (zout) zout.addEventListener("click", () => zoomAt(1.25, svgCentre()[0], svgCentre()[1]));
+    if (fit) fit.addEventListener("click", resetView);
+
+    svgEl.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      zoomAt(e.deltaY < 0 ? 0.88 : 1.14, e.clientX, e.clientY);
+    }, { passive: false });
+
+    let start = null, pinch = 0, moved = 0;
+
+    svgEl.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 1) { start = { x: e.clientX, y: e.clientY }; moved = 0; }
+      else if (pointers.size === 2) pinch = pinchSpan();
+      if (svgEl.setPointerCapture) { try { svgEl.setPointerCapture(e.pointerId); } catch (err) {} }
+      svgEl.classList.add("is-panning");
+    });
+
+    svgEl.addEventListener("pointermove", (e) => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size >= 2) {
+        const d = pinchSpan();
+        if (pinch > 0 && d > 0) zoomAt(pinch / d, svgCentre()[0], svgCentre()[1]);
+        pinch = d;
+        return;
+      }
+      if (!start) return;
+      const dx = e.clientX - start.x, dy = e.clientY - start.y;
+      moved += Math.abs(dx) + Math.abs(dy);
+      start = { x: e.clientX, y: e.clientY };
+      panBy(dx, dy);
+    });
+
+    const release = (e) => {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinch = 0;
+      if (pointers.size === 0) { start = null; svgEl.classList.remove("is-panning"); }
+    };
+    svgEl.addEventListener("pointerup", release);
+    svgEl.addEventListener("pointercancel", release);
+
+    // a drag must not also fire the underlying node/edge click
+    svgEl.addEventListener("click", (e) => {
+      if (moved > 6) { e.stopPropagation(); moved = 0; }
+    }, true);
+  }
+
+  /* =====================================================================
    * Wire-up
    * =================================================================== */
   function init() {
     // Expose the shared context, then bring up the capture/records layer before
     // the inbox renders, so freshly filed signals appear immediately.
-    window.__c2 = { G, D, state, esc, nfmt, toast, model, renderSignals, PRIORITY_TONE, QUALITY_TONE };
+    window.__c2 = { G, D, state, esc, nfmt, toast, model, renderSignals, PRIORITY_TONE, QUALITY_TONE, view: () => ({ ...view }), resetView };
     if (window.CONVERGE2_CAPTURE) window.CONVERGE2_CAPTURE.init();
 
     renderSignals();
@@ -743,13 +840,7 @@
     $("#export").addEventListener("click", exportState);
     $("#modal").addEventListener("click", (e) => { if (e.target.id === "modal" || e.target.classList.contains("modal-close")) $("#modal").classList.add("hidden"); });
     $("#graph").addEventListener("click", () => { if (state.selectedNode || state.selectedSignal) clearSelection(), hideInspector(); });
-    $$("#zoom-in, #zoom-out, #fit").forEach((b) => b.addEventListener("click", () => {
-      const v = $("#graph"); const vb = v.getAttribute("viewBox").split(" ").map(Number);
-      const f = b.id === "zoom-in" ? 0.85 : b.id === "zoom-out" ? 1.18 : 1;
-      if (b.id === "fit") { v.setAttribute("viewBox", "0 0 1000 644"); return; }
-      const [x, y, w, h] = vb; const nw = w * f, nh = h * f;
-      v.setAttribute("viewBox", `${x + (w - nw) / 2} ${y + (h - nh) / 2} ${nw} ${nh}`);
-    }));
+    wireCanvasView();
 
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") { $("#modal").classList.add("hidden"); hideInspector(); clearSelection(); } });
 

@@ -119,8 +119,8 @@ back to in-memory storage and the panel shows which is active.
 - **Signal Inbox** (left) — click a signal to isolate the entities it touches on
   the canvas. Click again to clear.
 - **Canvas** (centre) — click a node for its relationships; click an edge for its
-  evidence. `↺ Reveal` replays the whiteboard animation. `＋ / － / Fit` control
-  the view.
+  evidence. Scroll to zoom, drag to pan, pinch on touch, and `Fit` to reset.
+  `↺ Reveal` replays the whiteboard animation.
 - **Run Pipeline** — plays the SEE→ACT sequence, then re-draws the graph and
   refreshes the brief.
 - **Scenario** (Base / Optimistic / Conservative) — switches the assumption
@@ -154,6 +154,10 @@ converge2-signal-canvas/
 │   └── output.txt           # raw output of a passing run
 ├── SCOPE.md                 # what v1 is and is not
 ├── VERIFICATION.md          # acceptance criteria → evidence
+├── VERIFICATION-LOG.md      # commands run + observed results
+├── RESUMPTION.md            # what was done / unfinished / completed
+├── CHANGELOG.md             # what changed, session by session
+├── LEDGER.json / LEDGER.md  # durable session ledger (id, status, timestamps)
 └── HANDOFF.md               # layout, where to edit, next steps
 ```
 
@@ -218,21 +222,24 @@ assigns `window.CONVERGE2_DATA` before `app.js` runs.
 
 ## Verification
 
-- `node tests/check.mjs` → **43 passed, 0 failed** (dataset integrity, validation
-  rules, persistence across a simulated restart, shipped file set). Raw output in
-  `tests/output.txt`.
-- A real browser interaction run over the DevTools Protocol → **12 / 12 passed**:
+- `node tests/check.mjs` → **46 passed, 0 failed** (dataset integrity, validation
+  rules, persistence across a simulated restart, shipped file set, canvas
+  navigation wiring). Raw output in `tests/output.txt`.
+- A real browser interaction run over the DevTools Protocol → **16 / 16 passed**:
   capture modal opens, invalid input writes nothing and shows readable errors,
   valid input writes exactly one record, the signal appears in the inbox, the
-  pipeline run is logged, and the record survives a page reload
-  (`storageKind: localStorage`). Raw output in `tests/interaction-output.txt`.
+  pipeline run is logged, wheel zoom and drag pan work, `Fit` restores the view,
+  a drag does not select the node underneath, and the record survives a page
+  reload (`storageKind: localStorage`). Raw output in
+  `tests/interaction-output.txt`.
 - Rendered headlessly in Chrome at full page height: 15 nodes / 22 edges, every
   node label drawn, and all panels populated with real content.
-- Full criteria-to-evidence mapping: [`VERIFICATION.md`](VERIFICATION.md).
+- Full criteria-to-evidence mapping: [`VERIFICATION.md`](VERIFICATION.md);
+  per-command log: [`VERIFICATION-LOG.md`](VERIFICATION-LOG.md).
 
-Not yet verified: touch gestures on mobile (pinch-zoom on the canvas), and very
-large graphs (>60 nodes) where the radial layout will need a force layout or
-clustering.
+Not yet verified: very large graphs (>60 nodes), where the radial layout will
+need a force layout or clustering — deferred with reasons in
+[`RESUMPTION.md`](RESUMPTION.md).
 
 ---
 

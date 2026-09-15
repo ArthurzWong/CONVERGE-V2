@@ -7,7 +7,7 @@ Reproduce everything:
 
 ```bash
 cd converge2-signal-canvas
-node tests/check.mjs            # 43 checks, no dependencies
+node tests/check.mjs            # 46 checks, no dependencies
 ```
 
 ---
@@ -40,8 +40,11 @@ resulting DOM and store.
 | Valid submit | `afterValid: 1`, `modalClosed: true` |
 | Inbox | 9 cards (8 shipped + 1 filed), exactly 1 `local` badge |
 | Confirmation | toast "Signal SIG-… filed and stored." |
+| Canvas: wheel zoom | view width 1000 → 880 |
+| Canvas: drag pan | view moved by (-172, -97); the drag did **not** select the node under the pointer |
+| Canvas: Fit | view width restored to 1000 |
 
-*Interaction result:* **12 / 12 passed** (raw output: `tests/interaction-output.txt`).
+*Interaction result:* **16 / 16 passed** (raw output: `tests/interaction-output.txt`).
 
 Visual evidence: `shot-dashboard.png` (full workspace), `shot-capture-modal.png`
 (form with the validation error), `shot-records.png` (records panel).
@@ -117,9 +120,9 @@ CONVERGE2 Signal Canvas — check suite
 1 · Dataset integrity ...................... 16 passed
 2 · Signal capture — validation rules ...... 12 passed
 3 · Persistence and traceability ........... 12 passed
-4 · Shipped file set .......................  3 passed
+4 · Shipped file set .......................  6 passed
 --------------------------------------------------------
-RESULT: 43 passed, 0 failed, 43 total
+RESULT: 46 passed, 0 failed, 46 total
 All checks passed.
 ```
 
@@ -171,7 +174,8 @@ No criterion was dropped.
 3. **Best-effort graphics.** The reveal animation degrades to an instant render
    under `prefers-reduced-motion` or when opened as `index.html#skip`.
 4. **Large graphs untested.** The radial layout is tuned for ~15 nodes; beyond
-   roughly 60 it will need a force or clustered layout.
+   roughly 60 it will need a force or clustered layout. *Deferred:* that is a
+   design change rather than unfinished work — see `RESUMPTION.md` §4.
 5. **Design adaptation, declared.** The requested visual preset is a light,
    neutral system, while the seven supplied reference dashboards are explicitly
    dark intelligence workspaces. The build follows the **references**, because
@@ -179,3 +183,12 @@ No criterion was dropped.
    corners, restrained shadows and "charts as craft" treatment were applied
    within that dark language. This is a deliberate, declared deviation rather
    than an omission.
+
+### Closed in the follow-up session
+
+The canvas previously offered zoom buttons only, and touch/pointer gestures were
+unverified. Wheel zoom, drag pan, two-finger pinch and a `Fit` reset are now
+implemented and covered by 3 static and 4 browser checks (view width 1000 → 880
+on zoom, pan of (-172, -97), `Fit` back to 1000, and a drag correctly suppressed
+from selecting the node beneath it). Touch pinch is exercised through the same
+pointer-event path the browser reports for touch input.

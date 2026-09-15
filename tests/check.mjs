@@ -179,6 +179,23 @@ t("index.html wires the store and capture layers", () => {
   ok(html.includes('id="capture-form"'), "capture form missing");
   ok(html.includes('id="records"'), "records panel missing");
 });
+t("index.html exposes the canvas view controls", () => {
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  ['id="zoom-in"', 'id="zoom-out"', 'id="fit"', 'id="replay"'].forEach((s) => ok(html.includes(s), `missing ${s}`));
+});
+t("app.js wires wheel, drag and pinch navigation", () => {
+  const js = fs.readFileSync(path.join(ROOT, "js", "app.js"), "utf8");
+  ok(js.includes("wireCanvasView"), "wireCanvasView missing");
+  ok(/addEventListener\("wheel"/.test(js), "wheel handler missing");
+  ok(/addEventListener\("pointerdown"/.test(js), "pointerdown handler missing");
+  ok(/pointers\.size >= 2/.test(js), "pinch handling missing");
+  ok(/stopPropagation/.test(js), "drag-vs-click guard missing");
+});
+t("canvas declares grab / grabbing cursors", () => {
+  const css = fs.readFileSync(path.join(ROOT, "styles.css"), "utf8");
+  ok(/cursor:\s*grab/.test(css), "grab cursor missing");
+  ok(/cursor:\s*grabbing/.test(css), "grabbing cursor missing");
+});
 
 /* ---------------- summary ---------------- */
 console.log(`\n${"-".repeat(56)}`);

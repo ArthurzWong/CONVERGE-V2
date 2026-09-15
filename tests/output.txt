@@ -51,7 +51,10 @@ root: /Users/arthurwong/.openclaw-autoclaw/workspace/converge2-signal-canvas
   ✓ every required file exists
   ✓ index.html loads only same-origin scripts
   ✓ index.html wires the store and capture layers
+  ✓ index.html exposes the canvas view controls
+  ✓ app.js wires wheel, drag and pinch navigation
+  ✓ canvas declares grab / grabbing cursors
 
 --------------------------------------------------------
-RESULT: 43 passed, 0 failed, 43 total
+RESULT: 46 passed, 0 failed, 46 total
 All checks passed.

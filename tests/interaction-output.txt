@@ -1,4 +1,4 @@
-STEP 1 · interaction (before reload)
+STEP 1 · capture workflow (before reload)
 {
   "storageKind": "localStorage",
   "before": 0,
@@ -13,6 +13,16 @@ STEP 1 · interaction (before reload)
   "localBadges": 1,
   "recordsRows": 1,
   "afterRun": 2
+}
+
+STEP 1b · canvas view (zoom / pan)
+{
+  "baseWidth": 1000,
+  "zoomedWidth": 880,
+  "panMovedX": -172,
+  "panMovedY": -97,
+  "fitWidth": 1000,
+  "nodeSelectedByDrag": false
 }
 
 STEP 2 · after reload (persistence)
@@ -35,7 +45,11 @@ STEP 2 · after reload (persistence)
   ✓ inbox shows the filed signal
   ✓ records panel lists the record
   ✓ pipeline run is logged
+  ✓ wheel zoom changes the view
+  ✓ drag pans the view
+  ✓ drag does not select a node
+  ✓ Fit restores the base view
   ✓ records survive a reload
   ✓ filed signal re-renders after reload
 
-INTERACTION RESULT: 12/12 passed
+INTERACTION RESULT: 16/16 passed

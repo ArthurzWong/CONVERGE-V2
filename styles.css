@@ -164,10 +164,13 @@ li { font-size: 12.5px; color: var(--muted); margin: 3px 0; line-height: 1.45; }
 .graph-tools { display: flex; gap: 6px; }
 .tool { font: inherit; font-size: 11px; cursor: pointer; background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); border-radius: 7px; padding: 5px 9px; }
 .tool:hover { color: #fff; border-color: var(--blue); }
+.tool:active { transform: translateY(1px); }
 .graph-stage { position: relative; border-radius: var(--radius-sm); overflow: hidden; background:
   radial-gradient(600px 380px at 50% 45%, rgba(79,140,255,.09), transparent 70%), rgba(6,9,17,.6);
   border: 1px solid var(--border); }
-#graph { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 644; touch-action: none; }
+#graph { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 644; touch-action: none; cursor: grab; }
+#graph.is-panning { cursor: grabbing; }
+#graph.is-panning .node, #graph.is-panning .edge { cursor: grabbing; }
 
 .bg-arc { fill: none; stroke: rgba(255,255,255,.055); stroke-width: 1; stroke-dasharray: 3 7; }
 
