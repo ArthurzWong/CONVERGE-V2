@@ -260,4 +260,4 @@ engine is an independent SVG implementation inspired by the ideas in
 
 - `docs/screenshots/01-dashboard.jpg` — the full workspace
 - `docs/screenshots/02-capture-validation.jpg` — the capture form rejecting bad input
-- `docs/screenshots/03-records.png.jpg` — the Records inspector
+- `docs/screenshots/03-records.jpg` — the Records inspector
